@@ -1,0 +1,20 @@
+{
+  "name": "express-mw-logger",
+  "version": "1.0.0",
+  "description": "The Logger middleware for express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S25Digital/express-mw-logger.git"
+  },
+  "keywords": [],
+  "author": "Simranjeet Singh<simranjeet@s25.digital>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/S25Digital/express-mw-logger/issues"
+  },
+  "homepage": "https://github.com/S25Digital/express-mw-logger#readme"
+}
