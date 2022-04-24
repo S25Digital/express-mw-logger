@@ -20,5 +20,8 @@
   "dependencies": {
     "pino": "^7.10.0",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "express": "^4.17.3"
   }
 }

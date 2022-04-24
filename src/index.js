@@ -27,11 +27,11 @@ function getMw(config = {}) {
   const { loggerOpts, mwOpts } = getOpts(config);
   const logger = pino(loggerOpts);
 
-  return createMw(logger, mwOpts);
+  return createLoggerMiddleware(logger, mwOpts);
 }
 
 module.exports = {
-  getLoggerMiddleware,
+  getLoggerMiddleware: getMw,
   getLogReqMiddleware: createLogReqMiddleware,
   getErrorHandlerMiddleware: createErrorHandlerMiddleware
 };

@@ -46,7 +46,7 @@ function logCompletion(logger, reqInfo, isError = false) {
     reqId: reqInfo.reqId,
     request: reqInfo.request,
     response: reqInfo.response,
-    error: reqInfo.error || {},
+    error: reqInfo.error,
     customCtx: reqInfo.customCtx,
   };
 
@@ -72,14 +72,14 @@ function getReqLog(req, mwOpts) {
     headers:
       mwOpts.recordHeaders === true
         ? obfuscateHeaders(req.headers)
-        : "Header Recording is not enabled",
+        : "Header Recording is not enabled"
   };
 }
 
 function getResLog(res) {
   return {
-    status: res.status,
-    message: res.message,
+    status: res.statusCode,
+    message: res.statusMessage,
   };
 }
 
@@ -99,7 +99,7 @@ function addCustomLogCtx(req, obj) {
   };
 }
 
-function createMiddleware(logger, mwOpts = {}) {
+function createLoggerMiddleware(logger, mwOpts = {}) {
   return (req, res, next) => {
     const reqId = getReqId(req);
     const loggerObj = getLogger(logger, reqId);
@@ -109,7 +109,9 @@ function createMiddleware(logger, mwOpts = {}) {
       start: new Date().toUTCString(),
       reqId: reqId,
       request: getReqLog(req, mwOpts),
+      response: {},
       customCtx: {},
+      error: {}
     };
     req.addCustomLogCtx = (obj) => addCustomLogCtx(req, obj);
     next();
@@ -119,14 +121,16 @@ function createMiddleware(logger, mwOpts = {}) {
 function createLogReqMiddleware() {
   return (req, res, next) => {
     const logger = req.logger;
+    const reqInfo = req.reqInfo;
 
     if (!logger) {
-      throw new error(
-        "This middleware can only be used if Logger Middleare is attached to request first"
+      throw new Error(
+        "Log Request middleware can only be used if Logger Middleare is attached to request first"
       );
     }
 
-    logCompletion(logger, req.reqInfo);
+    reqInfo.response = getResLog(res);
+    logCompletion(logger, reqInfo);
     next();
   };
 }
@@ -135,15 +139,19 @@ function createErrorHandlerMiddleware() {
   return (err, req, res, next) => {
     const logger = req.logger;
     const reqInfo = req.reqInfo;
-    reqInfo.error = err;
 
     if (!logger) {
-      throw new error(
-        "This middleware can only be used if Logger Middleare is attached to request first"
+      console.log(
+        "Error Handler middleware can only be used if Logger Middleare is attached to request first"
       );
+      res.status(500).send({"message": "Something went wrong"});
+      return;
     }
 
-    logCompletion(logger, req.reqInfo);
+    reqInfo.error = err;
+    reqInfo.response = getResLog(res);
+
+    logCompletion(logger, req.reqInfo, true);
     res.status(500).send({
       error: "Something went wrong",
     });
