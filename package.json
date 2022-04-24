@@ -1,5 +1,5 @@
 {
-  "name": "express-mw-logger",
+  "name": "@s25digital/express-mw-logger",
   "version": "1.0.0",
   "description": "The Logger middleware for express",
   "main": "src/index.js",
