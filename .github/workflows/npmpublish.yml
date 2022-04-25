@@ -1,5 +1,5 @@
-# This workflow will run tests using node and then publish a package to npm if the commit message has either path or minor in it.
-
+# This workflow will run tests using node and then publish a package to npm if the commit message has either patch or minor in it.
+# the commit message should start with release
 name: Node.js Package Publisher
 
 on:
