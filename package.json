@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The Logger middleware for express",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "pretty": "prettier --write .",
     "lint:staged": "lint-staged"
@@ -23,6 +24,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "express": "^4.17.3",
     "husky": "^7.0.4",
     "lint-staged": "^12.4.0",

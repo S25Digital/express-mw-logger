@@ -1,5 +1,7 @@
 const pino = require("pino");
 
+let logger;
+
 const {
   createLoggerMiddleware,
   createLogReqMiddleware,
@@ -25,13 +27,14 @@ function getOpts(config) {
 
 function getMw(config = {}) {
   const { loggerOpts, mwOpts } = getOpts(config);
-  const logger = pino(loggerOpts);
+  logger = pino(loggerOpts);
 
   return createLoggerMiddleware(logger, mwOpts);
 }
 
 module.exports = {
+  Logger: logger || pino(),
   getLoggerMiddleware: getMw,
   getLogReqMiddleware: createLogReqMiddleware,
-  getErrorHandlerMiddleware: createErrorHandlerMiddleware
+  getErrorHandlerMiddleware: createErrorHandlerMiddleware,
 };

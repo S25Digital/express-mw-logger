@@ -1,10 +1,6 @@
 const Express = require("express");
 
-const {
-  getLoggerMiddleware,
-  getLogReqMiddleware,
-  getErrorHandlerMiddleware,
-} = require("../src");
+const { getLoggerMiddleware, getLogReqMiddleware, getErrorHandlerMiddleware } = require("../src");
 
 const app = new Express();
 
@@ -12,13 +8,13 @@ app.use(getLoggerMiddleware());
 
 app.get("/", (req, res, next) => {
   req.logger.info({
-    "message": "From Route"
+    message: "From Route",
   });
   req.addCustomLogCtx({
-    "custom": "data"
+    custom: "data",
   });
 
-  res.status(200).send({"status": "done"});
+  res.status(200).send({ status: "done" });
   next();
 });
 
