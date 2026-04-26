@@ -21,7 +21,7 @@
   "homepage": "https://github.com/S25Digital/express-mw-logger#readme",
   "dependencies": {
     "pino": "^7.10.0",
-    "uuid": "^8.3.2"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
